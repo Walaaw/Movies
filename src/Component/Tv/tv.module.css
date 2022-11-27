@@ -1,0 +1,35 @@
+a{
+    text-decoration: none;
+}
+.test {
+    background-color: aqua;
+}
+.movie img ,.tv img, .person img{
+    transition: all 1s;
+}
+.movie img:hover ,.tv img:hover, .person img:hover{
+    transform: scale(1.1)  rotate(-2deg);
+   
+
+}
+.item{
+    position: relative;
+}
+.item::before{
+    content: "";
+    position: absolute;
+    bottom: 110%;
+    left: 0;
+    width: 30%;
+    height: 1px;
+    background-color: #0DCAF0;
+}
+.item::after{
+    content: "";
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 90%;
+    height: 1px;
+    background-color: #0DCAF0;
+}
