@@ -43,7 +43,7 @@ useEffect(() => {
  
   const router=createHashRouter([{path:'' , element:<Main setuserData={setuserData} userData={userData}/>,
   children:[
-    {path:"",element:  <Register/>   },
+    {path:"",element:   <ProtectedRoute> <Home/> </ProtectedRoute>    },
     {path:"home",element:   <ProtectedRoute> <Home/> </ProtectedRoute>    },
     {path:"movie",element:   <ProtectedRoute> <Movie/> </ProtectedRoute>    },
     {path:"tv",element:   <ProtectedRoute><Tv/> </ProtectedRoute>    },
