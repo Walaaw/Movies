@@ -31,7 +31,7 @@ export default function Register() {
     last_name:Joi.string().required().alphanum().min(3).max(20),
     age: Joi.number().required().min(20).max(80),
     email: Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    password: Joi.string().required().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+    password: Joi.string().required().pattern(new RegExp('^[a-zA-Z0-9]{8,30}$'))
   })
  
   let errorresbonse=schema.validate(user,{abortEarly:false});
@@ -87,7 +87,7 @@ export default function Register() {
         {setOneError('email')?<div className=' alert alert-danger'>{ setOneError("email")}</div>:''}
         <label htmlFor="password" className='label-control'>password:</label>
         <input onChange={getUserData} type="password" id='password' placeholder='password'  className=' my-3 form-control bg-transparent text-white' />
-        {setOneError('password')?<div className=' alert alert-danger'>{ setOneError("password")}</div>:''}
+        {setOneError('password')?<div className=' alert alert-danger'>password required and must be 8 character at least</div>:''}
         <button className='btn btn-outline-info mt-3 '> register</button>
       </form>
     </div>

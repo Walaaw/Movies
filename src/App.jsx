@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {createBrowserRouter, RouterProvider,Navigate} from "react-router-dom";
+import { createHashRouter, RouterProvider} from "react-router-dom";
 import Home from './Component/Home/Home';
 import Register from './Component/Register/Register';
 import Login from './Component/Login/Login';
@@ -10,6 +10,7 @@ import jwtDecode from 'jwt-decode';
 import Profile from './Component/Profile/Profile';
 import Movie from './Component/Movie/Movie';
 import People from './Component/People/People'
+import NotFound from './Component/NotFound/NotFound';
 export default function App() {
 const [userData, setuserData] = useState(null);
 function ProtectedRoute(props){
@@ -33,16 +34,16 @@ console.log(userData);
 
 useEffect(() => {
   checkReload();
-}, [])
+}, [userData])
   function checkReload() {
     if(localStorage.getItem('token')!=null && userData==null){
       getloggeduser();
     }
   }
  
-  const router=createBrowserRouter([{path:'' , element:<Main setuserData={setuserData} userData={userData}/>,
+  const router=createHashRouter([{path:'' , element:<Main setuserData={setuserData} userData={userData}/>,
   children:[
-    {path:"/",element:  <ProtectedRoute> <Home/> </ProtectedRoute>   },
+    {path:"",element:  <Register/>   },
     {path:"home",element:   <ProtectedRoute> <Home/> </ProtectedRoute>    },
     {path:"movie",element:   <ProtectedRoute> <Movie/> </ProtectedRoute>    },
     {path:"tv",element:   <ProtectedRoute><Tv/> </ProtectedRoute>    },
@@ -52,7 +53,8 @@ useEffect(() => {
     {path:"login",element:<Login getloggeduser={getloggeduser}/>},
     {path:'details', element:<Itemdetail/> ,children:[
       {path:':media' ,children:[{path:':id'}]}
-    ]}
+    ]},
+    {path:'*',element:<NotFound/>}
   ]}])
 
   return (
