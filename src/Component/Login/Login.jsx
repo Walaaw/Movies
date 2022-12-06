@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios';
 import Joi from 'joi';
 import { useState } from 'react'
@@ -30,7 +30,7 @@ export default function Login( {getloggeduser}) {
  
   let errorresbonse=schema.validate(user,{abortEarly:false});
   if(errorresbonse.error===undefined){
-    callapi()
+    callapi();
   }
   else{
   let commingerrors=errorresbonse.error.details
@@ -38,8 +38,9 @@ export default function Login( {getloggeduser}) {
   }
  }
  async function callapi(){
-  let {data}=await axios.post("https://route-egypt-api.herokuapp.com/signin",user);
+  let {data}=await axios.post("https://sticky-note-fe.vercel.app/signin",user);
   let msg=data.message;
+  console.log(msg);
   if(msg==="success"){
     localStorage.setItem("token",data.token);
     getloggeduser();

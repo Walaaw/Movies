@@ -46,7 +46,7 @@ export default function Register() {
   }
  }
  async function callapi(){
-  let resbonse=await axios.post("https://route-egypt-api.herokuapp.com/signup",user);
+  let resbonse=await axios.post("https://sticky-note-fe.vercel.app/signup",user);
   let msg=resbonse.data.message;
   if(msg==="success"){
     navegate('/home')

@@ -13,16 +13,7 @@ import People from './Component/People/People'
 import NotFound from './Component/NotFound/NotFound';
 export default function App() {
 const [userData, setuserData] = useState(null);
-function ProtectedRoute(props){
-  if(userData===null){
-     return <Login/>
-  }
-  else{
-    return <>
-     {props.children}
-    </>
-  }
-}
+
   function getloggeduser() {
 
     let incodedata=localStorage.getItem("token");
@@ -34,13 +25,22 @@ console.log(userData);
 
 useEffect(() => {
   checkReload();
-}, [userData])
+}, [])
   function checkReload() {
     if(localStorage.getItem('token')!=null && userData==null){
       getloggeduser();
     }
   }
- 
+  function ProtectedRoute(props){
+    if(userData===null){
+       return <Login/>
+    }
+    else{
+      return <>
+       {props.children}
+      </>
+    }
+  }
   const router=createHashRouter([{path:'' , element:<Main setuserData={setuserData} userData={userData}/>,
   children:[
     {path:"",element:   <ProtectedRoute> <Home/> </ProtectedRoute>    },
