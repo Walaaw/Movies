@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { createHashRouter, RouterProvider} from "react-router-dom";
+import { createHashRouter,  RouterProvider} from "react-router-dom";
 import Home from './Component/Home/Home';
 import Register from './Component/Register/Register';
 import Login from './Component/Login/Login';
@@ -15,29 +15,31 @@ export default function App() {
 const [userData, setuserData] = useState(null);
 
   function getloggeduser() {
-
+  if(localStorage.getItem("token")!==null){
     let incodedata=localStorage.getItem("token");
     let decodeddata=jwtDecode(incodedata);
     setuserData(decodeddata);
+  } 
   }
 console.log(userData);
 
-
+function checkReload() {
+  if(localStorage.getItem('token')!=null&& userData == null ){
+    getloggeduser();
+  }
+}
 useEffect(() => {
   checkReload();
 }, [])
-  function checkReload() {
-    if(localStorage.getItem('token')!=null && userData==null){
-      getloggeduser();
-    }
-  }
+  
   function ProtectedRoute(props){
     if(userData===null){
-       return <Login/>
+       return <Login getloggeduser={getloggeduser}/>
     }
     else{
+      
       return <>
-       {props.children}
+      {props.children}
       </>
     }
   }
@@ -47,10 +49,10 @@ useEffect(() => {
     {path:"home",element:   <ProtectedRoute> <Home/> </ProtectedRoute>    },
     {path:"movie",element:   <ProtectedRoute> <Movie/> </ProtectedRoute>    },
     {path:"tv",element:   <ProtectedRoute><Tv/> </ProtectedRoute>    },
-    {path:"People",element:   <ProtectedRoute><People/> </ProtectedRoute>    },
+    {path:"People",element: <ProtectedRoute><People/> </ProtectedRoute>    },
     {path:"profile",element:  <Profile userData={userData}/>    },
     {path:"register",element:<Register/>},
-    {path:"login",element:<Login getloggeduser={getloggeduser}/>},
+    {path:"login",element:<Login userdata="hello" getloggeduser={getloggeduser}/>},
     {path:'details', element:<Itemdetail/> ,children:[
       {path:':media' ,children:[{path:':id'}]}
     ]},

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import axios from 'axios';
 import Joi from 'joi';
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-export default function Login( {getloggeduser}) {
+import { useNavigate } from "react-router-dom";
+export default function Login(props) {
   const navegate= useNavigate()
  const [regerror, setregerror] = useState("")
  const [errors, seterrors] = useState(null);
@@ -13,14 +13,8 @@ export default function Login( {getloggeduser}) {
     password:""
     }
  )
- function getUserData(e){
-  let newonject={...user};
-  let proberty=e.target.id
-  newonject[proberty]=e.target.value;
-  setuser(newonject);
-  seterrors(null);
-  setregerror('');
-}
+ 
+console.log(props);
  function validdata(e){
   e.preventDefault();
   const schema= Joi.object({
@@ -37,14 +31,21 @@ export default function Login( {getloggeduser}) {
   seterrors(commingerrors);
   }
  }
+ function getUserData(e){
+  let newonject={...user};
+  let proberty=e.target.id
+  newonject[proberty]=e.target.value;
+  setuser(newonject);
+  seterrors(null);
+  setregerror('');
+}
  async function callapi(){
   let {data}=await axios.post("https://sticky-note-fe.vercel.app/signin",user);
   let msg=data.message;
-  console.log(msg);
   if(msg==="success"){
     localStorage.setItem("token",data.token);
-    getloggeduser();
-    navegate('/home')
+    navegate('/home');
+    props.getloggeduser();
   }
   else{
     setregerror(msg);
@@ -61,7 +62,7 @@ export default function Login( {getloggeduser}) {
     return '';
   }
  }
-  
+ 
   return (
     <>
     

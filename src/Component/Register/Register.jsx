@@ -49,7 +49,7 @@ export default function Register() {
   let resbonse=await axios.post("https://sticky-note-fe.vercel.app/signup",user);
   let msg=resbonse.data.message;
   if(msg==="success"){
-    navegate('/home')
+    navegate('/login')
   }
   else{
     setregerror(msg);
