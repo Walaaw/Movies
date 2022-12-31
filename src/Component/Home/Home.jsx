@@ -2,6 +2,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../Context/Context';
+import Slider from '../Slider/Slider';
 import homeStyle from './Home.module.css'
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
    let {allmovies,alltvs,allperson}= useContext(AppContext)
     return (
     <>
+    <Slider/>
     {allmovies!==null && alltvs!==null &&allperson? <div className=" container">
       <div className="row mt-5">
         <div className="col-md-4 d-flex align-items-center">

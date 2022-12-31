@@ -2,7 +2,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import itemstyle from './itemdstaikls.module.css'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 export default function Itemdetail() {
+
      const {media,id} =useParams()
      const [details,setdatails]= useState(null);
      const [desc, setdesc] = useState(null);
@@ -25,7 +28,25 @@ export default function Itemdetail() {
    getsaimiliar();
 
  }, [])
- 
+ const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
+}
   return (
   <>
   {details? <div className=" container">
@@ -67,16 +88,16 @@ export default function Itemdetail() {
  {samilier?<div className='container'>
   <div className='row mt-5 mb-5'>
   <h3 className=' text-info p-3 m-2'> Related with:</h3>
-
-   {samilier.slice(0,12).map((same,idx)=> <div key={idx} className='col-md-2'>
+  <Carousel responsive={responsive}>
+  {samilier.map((same,idx)=> <div key={idx} >
       <div className='item '>
         <figure>
         <img src={'https://image.tmdb.org/t/p/w500'+ same.backdrop_path} alt='same' className='w-100 rounded'/>
         < p className='text-center text-info p-2'> {same.name}{same.original_title}</p>
         </figure>
-       
       </div>
     </div>)}
+</Carousel>
 
   </div>
  </div>:<div className="loadingScreen vh-100  d-flex justify-content-center align-items-center">
